@@ -8,7 +8,42 @@ public class Enemy : MonoBehaviour
     public float damage = 10.0f ;
     public float attackInterval = 1.0f;
     private float lastAttackTime = -999f;
+    public float moveSpeed = 2.0f;
+    private Rigidbody2D rb;
+    private Transform playerTarget;
+    public float decetRange = 12f;
 
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if(playerObj != null )
+        {
+            playerTarget = playerObj.transform;
+        }
+        if(playerObj == null )
+            return;
+    }
+
+    void Update()
+    {
+        if (rb == null) return;
+        if (playerTarget == null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+        float dist = Vector2.Distance(transform.position, playerTarget.position);
+        if (dist > decetRange)
+        {
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            return;
+        }
+        Vector2 dir = (playerTarget.position-transform.position);
+        dir = dir.normalized;
+        rb.linearVelocity = new Vector2(dir.x * moveSpeed, rb.linearVelocity.y);
+
+    }
 
     void OnCollisionStay2D(Collision2D collision)
     {
