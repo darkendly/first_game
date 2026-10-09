@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 2.0f;
     private Rigidbody2D rb;
     private Transform playerTarget;
-    public float decetRange = 12f;
+    public float detectRange = 12f;
 
     void Start()
     {
@@ -27,6 +27,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.y < -10f)
+        {
+            Destroy(gameObject);
+        }
         if (rb == null) return;
         if (playerTarget == null)
         {
@@ -34,7 +38,7 @@ public class Enemy : MonoBehaviour
             return;
         }
         float dist = Vector2.Distance(transform.position, playerTarget.position);
-        if (dist > decetRange)
+        if (dist > detectRange)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
@@ -42,6 +46,7 @@ public class Enemy : MonoBehaviour
         Vector2 dir = (playerTarget.position-transform.position);
         dir = dir.normalized;
         rb.linearVelocity = new Vector2(dir.x * moveSpeed, rb.linearVelocity.y);
+        
 
     }
 
@@ -73,7 +78,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float amount)
     {
         hp -= amount;
-        if (hp < 0)
+        if (hp <= 0)
         {
             hp = 0.0f;
             Destroy(gameObject);

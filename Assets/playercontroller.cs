@@ -5,6 +5,8 @@ public class Playercontroller : MonoBehaviour
 {
     private float hp = 100.0f;
     private float maxHp = 100f;
+    public float invincibleTime = 0.7f;
+    private float lastHitTime = -999f;
 
     public float speed = 5f;
     public float jumpForce = 8f;
@@ -118,7 +120,10 @@ public class Playercontroller : MonoBehaviour
     public void TakeDamage(float amount)
     {
         if (isDead == true) return;
+        if (Time.time - lastHitTime < invincibleTime) return;
+
         hp -= amount;
+        lastHitTime =Time.time;
         if (hp <= 0)
         {
             hp = 0.0f;
@@ -140,7 +145,7 @@ public class Playercontroller : MonoBehaviour
             Vector2 center = new Vector2(transform.position.x + facing * 0.8f, transform.position.y);
             Gizmos.DrawWireSphere(center, damageRange);
         }
-    /*public void TestValueVsReference()
+    public void TestValueVsReference()
     {
         Debug.Log("µ±Ç°ÑªÁ¿" + hp);
         TakeDamage(10f);
@@ -149,7 +154,6 @@ public class Playercontroller : MonoBehaviour
         local -= 10;
         Debug.Log("" + hp);
     }
-    */
     void OnGUI()
     {
         GUI.Label(new Rect(10, 10, 400, 40), "HP: " + hp + " / " + maxHp);
