@@ -24,7 +24,7 @@ public class Playercontroller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        TestValueVsReference();
+        //TestValueVsReference();
         startPoint = transform.position;
     }
     void Update()
