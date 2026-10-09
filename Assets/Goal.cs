@@ -12,7 +12,8 @@ public class Goal : MonoBehaviour
 
      void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player") )
+        Debug.Log("Goal 被触发，碰到的是：" + other.name);
+        if (other.CompareTag("Player") )
         {
             WinText.SetActive(true);
         }

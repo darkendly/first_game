@@ -16,6 +16,7 @@ public class Playercontroller : MonoBehaviour
     private float attackCoolDown = 0.4f;
     private float lastAttackTime = -999f;
     private bool isDead = false;
+    private Vector3 startPoint;
     //设置移动速度
 
 
@@ -23,6 +24,8 @@ public class Playercontroller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        TestValueVsReference();
+        startPoint = transform.position;
     }
     void Update()
     {
@@ -63,6 +66,15 @@ public class Playercontroller : MonoBehaviour
         {
             Attack();
         }//攻击
+
+        //掉落时返回起点
+        if (transform.position.y < -10f)
+        {
+            transform.position = startPoint;
+            rb.linearVelocity = Vector2.zero;
+        
+        
+        }
     }
     
     
@@ -128,7 +140,19 @@ public class Playercontroller : MonoBehaviour
             Vector2 center = new Vector2(transform.position.x + facing * 0.8f, transform.position.y);
             Gizmos.DrawWireSphere(center, damageRange);
         }
+    /*public void TestValueVsReference()
+    {
+        Debug.Log("当前血量" + hp);
+        TakeDamage(10f);
+        Debug.Log("当前血量" + hp);
+        float local = hp;
+        local -= 10;
+        Debug.Log("" + hp);
+    }
+    */
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 400, 40), "HP: " + hp + " / " + maxHp);
+    }
 
-
-    
 }
