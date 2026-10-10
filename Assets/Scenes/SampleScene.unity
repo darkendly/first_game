@@ -720,6 +720,9 @@ MonoBehaviour:
   damage: 10
   attackInterval: 1
   moveSpeed: 2
+  detectRange: 12
+  knockbackForce: 6
+  hitStunTime: 0.25
 --- !u!61 &592308289
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1121,6 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ca9d7449fe0324a861744902281852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playercontroller
+  invincibleTime: 0.7
   speed: 5
   jumpForce: 8
 --- !u!212 &760108384
@@ -1512,6 +1516,9 @@ MonoBehaviour:
   damage: 10
   attackInterval: 1
   moveSpeed: 2
+  detectRange: 12
+  knockbackForce: 6
+  hitStunTime: 0.25
 --- !u!61 &1397707279
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1805,6 +1812,9 @@ MonoBehaviour:
   damage: 10
   attackInterval: 1
   moveSpeed: 2
+  detectRange: 12
+  knockbackForce: 6
+  hitStunTime: 0.25
 --- !u!61 &1634063756
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -110,7 +110,7 @@ public class Playercontroller : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage,facing);
             }
         }
     }

@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private Transform playerTarget;
     public float detectRange = 12f;
+    public float knockbackForce = 6f;
+    public float hitStunTime = 0.25f;
+    private float stunEndTime = -999f;
 
     void Start()
     {
@@ -29,8 +32,10 @@ public class Enemy : MonoBehaviour
     {
         if (transform.position.y < -10f)
         {
+            Debug.Log(gameObject.name + "掉出地图销毁");
             Destroy(gameObject);
         }
+        if (Time.time < stunEndTime) return;
         if (rb == null) return;
         if (playerTarget == null)
         {
@@ -53,7 +58,7 @@ public class Enemy : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)
     {
 
-        Debug.Log("敌人被撞：撞到的是"+collision.gameObject.name);
+    
         Playercontroller player = collision.gameObject.GetComponent<Playercontroller>();
         if (player == null)
         {
@@ -74,10 +79,14 @@ public class Enemy : MonoBehaviour
     {
         get { return maxHp; }
         set { maxHp = value; }
+        
     }
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount,float hitDirx)
     {
         hp -= amount;
+        rb.linearVelocity = new Vector2(hitDirx * knockbackForce, rb.linearVelocity.y);
+        Debug.Log(rb.linearVelocity.x);
+        stunEndTime = Time.time + hitStunTime;
         if (hp <= 0)
         {
             hp = 0.0f;
