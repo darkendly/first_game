@@ -25,6 +25,7 @@ public class Playercontroller : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        
         rb = GetComponent<Rigidbody2D>();
         //TestValueVsReference();
         startPoint = transform.position;

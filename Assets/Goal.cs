@@ -3,10 +3,13 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public GameObject WinText;
+    public GameOver gameover;
 
     void Start()
     {
         WinText.SetActive(false);
+        gameover = GetComponent<GameOver>();
+        
     }
    
 
@@ -16,6 +19,8 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("Player") )
         {
             WinText.SetActive(true);
+            if (gameover != null) gameover.Win();
         }
     }
+    
 }

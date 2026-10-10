@@ -15,9 +15,16 @@ public class Enemy : MonoBehaviour
     public float knockbackForce = 6f;
     public float hitStunTime = 0.25f;
     private float stunEndTime = -999f;
+    private SpriteRenderer sr;
+    private Color  originalColor;
+    public float flashTime = 0.1f;
+    public Color flashColor = Color.red;
+    private float flashEndTime = -999f;
 
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+        originalColor = sr.color;
         rb = GetComponent<Rigidbody2D>();
         GameObject playerObj = GameObject.FindWithTag("Player");
         if(playerObj != null )
@@ -35,6 +42,7 @@ public class Enemy : MonoBehaviour
             Debug.Log(gameObject.name + "µô³öµØÍ¼Ïú»Ù");
             Destroy(gameObject);
         }
+        if(Time.time>flashEndTime) sr.color = originalColor;
         if (Time.time < stunEndTime) return;
         if (rb == null) return;
         if (playerTarget == null)
@@ -83,6 +91,8 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(float amount,float hitDirx)
     {
+        sr.color = flashColor;
+        flashEndTime = Time.time + flashTime;
         hp -= amount;
         rb.linearVelocity = new Vector2(hitDirx * knockbackForce, rb.linearVelocity.y);
         Debug.Log(rb.linearVelocity.x);
